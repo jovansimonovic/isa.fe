@@ -1,9 +1,11 @@
 "use client";
 
+import { useTestActions } from "@/contexts/testContext";
+import testAction from "@/core/testAction";
 import { useListData } from "@/hooks/useListData";
 import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
-import { Spinner } from "reactstrap";
+import { Button, Row, Spinner } from "reactstrap";
 
 const tableColumns = [
   {
@@ -21,13 +23,16 @@ const tableColumns = [
 export default function UserList() {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const { state, dispatch } = useTestActions();
+
   const { getData, loading, data } = useListData(
-    `user/get-user-page-list?pageNumber=${pageNumber - 1}&pageSize=${pageSize}`
+    `user/get-page-list?pageNumber=${pageNumber - 1}&pageSize=${pageSize}`
   );
 
   useEffect(() => {
     getData(
-      `user/get-user-page-list?pageNumber=${pageNumber - 1}&pageSize=${pageSize}`);
+      `user/get-page-list?pageNumber=${pageNumber - 1}&pageSize=${pageSize}`
+    );
   }, [pageSize, pageNumber]);
 
   const handlePageChange = async (page) => {
@@ -39,8 +44,24 @@ export default function UserList() {
     setPageSize(newPerPage);
   };
 
+
   return (
     <>
+      <Row>
+        <h5>Email: {state.email}</h5>
+        <Button
+          type="button"
+          className="btn btn-success"
+          onClick={() => {
+            dispatch({
+              type: testAction.CHANGE_EMAIL,
+              payload: "testpromena@gmail.com",
+            });
+          }}
+        >
+          Change email
+        </Button>
+      </Row>
       {data != null && (
         <DataTable
           data={data.users}

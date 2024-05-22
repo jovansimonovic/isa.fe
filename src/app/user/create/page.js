@@ -1,6 +1,8 @@
 "use client";
 
+import { useTestActions } from "@/contexts/testContext";
 import { post } from "@/core/httpClient";
+import testAction from "@/core/testAction";
 import { useForm } from "react-hook-form";
 import { Row, Col, Button } from "reactstrap";
 
@@ -14,13 +16,45 @@ export default function UserCreate() {
     mode: "onSubmit",
   });
 
+  const { state, dispatch } = useTestActions();
+
   return (
     <>
+      <Row className="mb-2">
+        <h5>Email: {state.email}</h5>
+        <Button
+          type="button"
+          className="btn btn-success"
+          onClick={() => {
+            dispatch({
+              type: testAction.CHANGE_EMAIL,
+              payload: "nnikolic@gmail.com",
+            });
+          }}
+        >
+          Change email
+        </Button>
+      </Row>
       <Row className="mb-3">
+        <h5>First name: {state.firstName}</h5>
+        <Button
+          type="button"
+          className="btn btn-success"
+          onClick={() => {
+            dispatch({
+              type: testAction.CHANGE_FIRST_NAME,
+              payload: "Petar",
+            });
+          }}
+        >
+          Change first name
+        </Button>
+      </Row>
+      <Row className="mb-3 ">
         <Col md={6}>
           <input
             type="text"
-            className="form-control"
+            className="form-control mb-3 mb-sm-3 mb-md-0"
             placeholder="First name"
             {...register("firstName", {
               required: "This field is required",
@@ -89,12 +123,13 @@ export default function UserCreate() {
         <Col className="d-flex justify-content-end">
           <Button
             type="button"
-            className="btn btn-primary"
+            className="btn btn-primary mb-3 mb-sm-3 mb-md-0"
             onClick={() => {
               handleSubmit(async (data) => {
                 await post("/user/create-user-body", data);
               })();
-            }}>
+            }}
+          >
             Create
           </Button>
         </Col>
