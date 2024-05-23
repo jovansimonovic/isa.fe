@@ -1,11 +1,14 @@
 "use client";
 
-import { useTestActions } from "@/contexts/testContext";
-import testAction from "@/core/testAction";
 import { useListData } from "@/hooks/useListData";
 import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
-import { Button, Row, Spinner } from "reactstrap";
+import { Button, Spinner } from "reactstrap";
+import { CiEdit } from "react-icons/ci";
+import { CiTrash } from "react-icons/ci";
+import { useListActions } from "@/contexts/listActionContext";
+import listAction from "@/core/listAction";
+import AllUserDialogs from "@/app/elements/User/AllUserDialogs";
 
 const tableColumns = [
   {
@@ -18,12 +21,52 @@ const tableColumns = [
     selector: (row) => `${row.lastName}`,
     sortable: false,
   },
+  {
+    name: "Contact number",
+    selector: (row) => `${row.contactNumber}`,
+    sortable: false,
+  },
+  {
+    name: "Options",
+    selector: (row) => `${row.lastName}`,
+    cell: (row) => {
+      const { dispatch } = useListActions();
+
+      return (
+        <>
+          <Button
+            className="btn btn-light me-2"
+            onClick={() => {
+              dispatch({
+                type: listAction.UPDATE,
+                payload: row,
+              });
+            }}
+          >
+            <CiEdit />
+          </Button>
+          <Button
+            className="btn btn-light"
+            onClick={() => {
+              dispatch({
+                type: listAction.DELETE,
+                payload: row,
+              });
+            }}
+          >
+            <CiTrash />
+          </Button>
+        </>
+      );
+    },
+    sortable: false,
+  },
 ];
 
 export default function UserList() {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const { state, dispatch } = useTestActions();
+  const { state } = useListActions();
 
   const { getData, loading, data } = useListData(
     `user/get-page-list?pageNumber=${pageNumber - 1}&pageSize=${pageSize}`
@@ -35,6 +78,14 @@ export default function UserList() {
     );
   }, [pageSize, pageNumber]);
 
+  useEffect(() => {
+    if (state.reload) {
+      getData(
+        `user/get-page-list?pageNumber=${pageNumber - 1}&pageSize=${pageSize}`
+      );
+    }
+  }, [state]);
+
   const handlePageChange = async (page) => {
     setPageNumber(page);
   };
@@ -44,24 +95,8 @@ export default function UserList() {
     setPageSize(newPerPage);
   };
 
-
   return (
     <>
-      <Row>
-        <h5>Email: {state.email}</h5>
-        <Button
-          type="button"
-          className="btn btn-success"
-          onClick={() => {
-            dispatch({
-              type: testAction.CHANGE_EMAIL,
-              payload: "testpromena@gmail.com",
-            });
-          }}
-        >
-          Change email
-        </Button>
-      </Row>
       {data != null && (
         <DataTable
           data={data.users}
@@ -74,10 +109,11 @@ export default function UserList() {
           paginationTotalRows={data.totalElements}
           onChangePage={handlePageChange}
           onChangeRowsPerPage={handlePerRowsChange}
-          progressComponent={<Spinner color="danger">Ocitavanje...</Spinner>}
+          progressComponent={<Spinner color="danger">Ucitavanje...</Spinner>}
           highlightOnHover
         />
       )}
+      <AllUserDialogs />
     </>
   );
 }
