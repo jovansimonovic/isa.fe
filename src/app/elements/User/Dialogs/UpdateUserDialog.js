@@ -31,6 +31,8 @@ export const UpdateUserDialog = ({ isOpen }) => {
     defaultValues: state.row,
   });
 
+  console.log(state)
+
   useEffect(() => {
     setValue("id", state.row.id);
     setValue("firstName", state.row.firstName);
@@ -87,6 +89,19 @@ export const UpdateUserDialog = ({ isOpen }) => {
             />
             {errors && errors.email && (
               <span className="text-danger">{errors.email.message}</span>
+            )}
+          </Col>
+        </Row>
+        <Row className="mb-3">
+          <Col>
+            <input
+              type="password"
+              className="form-control"
+              placeholder="Password"
+              {...register("password", { required: "This field is required" })}
+            />
+            {errors && errors.password && (
+              <span className="text-danger">{errors.password.message}</span>
             )}
           </Col>
         </Row>
