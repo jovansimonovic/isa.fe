@@ -10,12 +10,11 @@ import {
   Row,
 } from "reactstrap";
 import { useForm } from "react-hook-form";
-import { put } from "@/core/httpClient";
-import { useEffect } from "react";
+import { post } from "@/core/httpClient";
 import { toast } from "react-toastify";
 
-export const UpdateUserDialog = ({ isOpen }) => {
-  const { state, dispatch } = useListActions();
+export const CreateUserDialog = ({ isOpen }) => {
+  const { dispatch } = useListActions();
 
   const toggle = () =>
     dispatch({
@@ -26,23 +25,13 @@ export const UpdateUserDialog = ({ isOpen }) => {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
   } = useForm({
     mode: "onSubmit",
-    defaultValues: state.row,
   });
-
-  useEffect(() => {
-    setValue("id", state.row.id);
-    setValue("firstName", state.row.firstName);
-    setValue("lastName", state.row.lastName);
-    setValue("email", state.row.email);
-    setValue("contactNumber", state.row.contactNumber);
-  }, [state]);
 
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
-      <ModalHeader toggle={toggle}>Edit user</ModalHeader>
+      <ModalHeader toggle={toggle}>Create user</ModalHeader>
       <ModalBody>
         <Row className="mb-3 ">
           <Col md={6}>
@@ -135,10 +124,10 @@ export const UpdateUserDialog = ({ isOpen }) => {
           className="btn btn-success"
           onClick={() => {
             handleSubmit(async (data) => {
-              let result = await put("/user/update", data);
+              let result = await post("/user/create", data);
 
               if (result && result.status === 200) {
-                toast.success("User successfully updated");
+                toast.success("User successfully created");
                 dispatch({
                   type: listAction.RELOAD,
                 });
@@ -146,7 +135,7 @@ export const UpdateUserDialog = ({ isOpen }) => {
             })();
           }}
         >
-          Update
+          Create
         </Button>
         <Button color="secondary" onClick={toggle}>
           Cancel
@@ -156,4 +145,4 @@ export const UpdateUserDialog = ({ isOpen }) => {
   );
 };
 
-export default UpdateUserDialog;
+export default CreateUserDialog;

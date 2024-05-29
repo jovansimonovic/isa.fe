@@ -11,8 +11,12 @@ const listActionContext = createContext();
 
 const listActionReducer = (state, action) => {
   switch (action.type) {
+    case listAction.CREATE:
+      return { ...state, row: {}, type: listAction.CREATE };
     case listAction.UPDATE:
       return { ...state, row: action.payload, type: listAction.UPDATE };
+    case listAction.DELETE:
+      return { ...state, row: action.payload, type: listAction.DELETE };
     case listAction.RELOAD:
       return { ...initialState, reload: true };
     case listAction.RESET:

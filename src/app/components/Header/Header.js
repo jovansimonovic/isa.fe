@@ -34,12 +34,6 @@ export default function Header() {
           >
             Users
           </Link>
-          <Link
-            href="/user/create"
-            className="me-3 py-2 text-dark text-decoration-none"
-          >
-            Create User
-          </Link>
         </nav>
       </div>
     </header>
