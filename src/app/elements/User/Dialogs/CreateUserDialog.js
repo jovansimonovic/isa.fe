@@ -1,5 +1,5 @@
-import { useListActions } from "@/contexts/listActionContext";
-import listAction from "@/core/listAction";
+import { useListActions } from "../../../../contexts/listActionContext";
+import listAction from "../../../../core/listAction";
 import {
   Button,
   Col,
@@ -10,7 +10,7 @@ import {
   Row,
 } from "reactstrap";
 import { useForm } from "react-hook-form";
-import { post } from "@/core/httpClient";
+import { post } from "../../../../core/httpClient";
 import { toast } from "react-toastify";
 
 export const CreateUserDialog = ({ isOpen }) => {

@@ -9,13 +9,21 @@ export const Axios = axios.create({
   },
 });
 
+export const AxiosAuth = axios.create({
+  baseURL: "http://localhost:8080",
+  timeout: 150000000,
+  headers: {
+    "Content-type": "application/json",
+  },
+});
+
 export const get = async (url, params) => {
   return await Axios.get(url, { params });
 };
 
-export const post = async (url, params) => {
+export const post = async (url, params, config) => {
   try {
-    return await Axios.post(url, params);
+    return await Axios.post(url, params, config);
   } catch {
     toast.error("Failed to create user");
   }

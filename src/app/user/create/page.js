@@ -1,5 +1,3 @@
-"use client";
-
 import { post } from "@/core/httpClient";
 import { useForm } from "react-hook-form";
 import { Row, Col, Button } from "reactstrap";

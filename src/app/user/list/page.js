@@ -1,15 +1,16 @@
 "use client";
 
-import { useListData } from "@/hooks/useListData";
+import useListData from "../../../hooks/useListData";
 import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { Button, Card, CardBody, CardHeader, Spinner } from "reactstrap";
 import { CiEdit } from "react-icons/ci";
 import { CiTrash } from "react-icons/ci";
-import { useListActions } from "@/contexts/listActionContext";
-import listAction from "@/core/listAction";
-import AllUserDialogs from "@/app/elements/User/AllUserDialogs";
+import { useListActions } from "../../../contexts/listActionContext";
+import listAction from "../../../core/listAction";
 import { IoAddCircleOutline } from "react-icons/io5";
+import { signIn, useSession } from "next-auth/react";
+import AllUserDialogs from "../../elements/User/AllUserDialogs";
 
 const tableColumns = [
   {
@@ -100,6 +101,7 @@ export default function UserList() {
     <>
       <Card>
         <CardHeader className="d-flex justify-content-end">
+          <button onClick={() => signIn()}>Sign in</button>
           <Button
             className="btn btn-success"
             onClick={() => {

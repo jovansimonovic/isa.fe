@@ -1,4 +1,4 @@
-import listAction from "@/core/listAction";
+import listAction from "../core/listAction";
 import { createContext, useReducer, useContext } from "react";
 
 const initialState = {

@@ -1,5 +1,5 @@
-import { useListActions } from "@/contexts/listActionContext";
-import listAction from "@/core/listAction";
+import { useListActions } from "../../../../contexts/listActionContext";
+import listAction from "../../../../core/listAction";
 import {
   Button,
   Col,
@@ -10,7 +10,7 @@ import {
   Row,
 } from "reactstrap";
 import { useForm } from "react-hook-form";
-import { put } from "@/core/httpClient";
+import { put } from "../../../../core/httpClient";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 

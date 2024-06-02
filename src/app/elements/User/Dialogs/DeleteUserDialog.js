@@ -1,13 +1,7 @@
-import { useListActions } from "@/contexts/listActionContext";
-import listAction from "@/core/listAction";
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-} from "reactstrap";
-import { del } from "@/core/httpClient";
+import { useListActions } from "../../../../contexts/listActionContext";
+import listAction from "../../../../core/listAction";
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import { del } from "../../../../core/httpClient";
 import { toast } from "react-toastify";
 
 export const DeleteUserDialog = ({ isOpen }) => {

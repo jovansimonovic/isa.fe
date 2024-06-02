@@ -1,6 +1,6 @@
-import listAction from "@/core/listAction";
+import listAction from "../../../core/listAction";
 import UpdateUserDialog from "./Dialogs/UpdateUserDialog";
-import { useListActions } from "@/contexts/listActionContext";
+import { useListActions } from "../../../contexts/listActionContext";
 import DeleteUserDialog from "./Dialogs/DeleteUserDialog";
 import CreateUserDialog from "./Dialogs/CreateUserDialog";
 
