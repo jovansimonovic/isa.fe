@@ -10,7 +10,6 @@ import { useListActions } from "../../../contexts/listActionContext";
 import listAction from "../../../core/listAction";
 import { IoAddCircleOutline } from "react-icons/io5";
 import {signIn} from "next-auth/react";
-import { signIn, useSession } from "next-auth/react";
 import AllUserDialogs from "../../elements/User/AllUserDialogs";
 
 const tableColumns = [
