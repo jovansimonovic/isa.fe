@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer } from "react";
-import testAction from "../core/testAction";
+import testAction from "@/core/testAction";
 
 const initialState = {
   firstName: "Petar",
