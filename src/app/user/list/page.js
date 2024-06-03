@@ -1,14 +1,16 @@
 "use client";
 
-import { useListData } from "@/hooks/useListData";
+import useListData from "../../../hooks/useListData";
 import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
-import { Button, Spinner } from "reactstrap";
+import { Button, Card, CardBody, CardHeader, Spinner } from "reactstrap";
 import { CiEdit } from "react-icons/ci";
 import { CiTrash } from "react-icons/ci";
-import { useListActions } from "@/contexts/listActionContext";
-import listAction from "@/core/listAction";
-import AllUserDialogs from "@/app/elements/User/AllUserDialogs";
+import { useListActions } from "../../../contexts/listActionContext";
+import listAction from "../../../core/listAction";
+import { IoAddCircleOutline } from "react-icons/io5";
+import {signIn} from "next-auth/react";
+import AllUserDialogs from "../../elements/User/AllUserDialogs";
 
 const tableColumns = [
   {
@@ -35,7 +37,7 @@ const tableColumns = [
       return (
         <>
           <Button
-            className="btn btn-light me-2"
+            className="btn btn-primary me-2"
             onClick={() => {
               dispatch({
                 type: listAction.UPDATE,
@@ -46,7 +48,7 @@ const tableColumns = [
             <CiEdit />
           </Button>
           <Button
-            className="btn btn-light"
+            className="btn btn-danger"
             onClick={() => {
               dispatch({
                 type: listAction.DELETE,
@@ -66,7 +68,7 @@ const tableColumns = [
 export default function UserList() {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const { state } = useListActions();
+  const { state, dispatch } = useListActions();
 
   const { getData, loading, data } = useListData(
     `user/get-page-list?pageNumber=${pageNumber - 1}&pageSize=${pageSize}`
@@ -97,22 +99,42 @@ export default function UserList() {
 
   return (
     <>
-      {data != null && (
-        <DataTable
-          data={data.users}
-          columns={tableColumns}
-          striped={true}
-          noHeader={true}
-          pagination
-          paginationServer
-          progressPending={loading}
-          paginationTotalRows={data.totalElements}
-          onChangePage={handlePageChange}
-          onChangeRowsPerPage={handlePerRowsChange}
-          progressComponent={<Spinner color="danger">Ucitavanje...</Spinner>}
-          highlightOnHover
-        />
-      )}
+      <Card>
+        <CardHeader className="d-flex justify-content-end">
+          <button onClick={() => signIn()}>Sign in</button>
+          <Button
+            className="btn btn-success"
+            onClick={() => {
+              dispatch({
+                type: listAction.CREATE,
+              });
+            }}
+          >
+            Create user <IoAddCircleOutline />
+          </Button>
+        </CardHeader>
+        <CardBody>
+          {data != null && (
+            <DataTable
+              data={data.users}
+              columns={tableColumns}
+              striped={true}
+              noHeader={true}
+              pagination
+              paginationServer
+              progressPending={loading}
+              paginationTotalRows={data.totalElements}
+              onChangePage={handlePageChange}
+              onChangeRowsPerPage={handlePerRowsChange}
+              progressComponent={
+                <Spinner color="danger">Ucitavanje...</Spinner>
+              }
+              highlightOnHover
+            />
+          )}
+        </CardBody>
+      </Card>
+
       <AllUserDialogs />
     </>
   );
