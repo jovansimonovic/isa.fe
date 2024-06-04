@@ -1,17 +1,19 @@
-const { useSession } = require("next-auth/react");
+import storageKey from "@/core/storageKey";
+
 const { useRefreshToken } = require("./useRefreshToken");
 const { useEffect } = require("react");
 const { AxiosAuth } = require("@/core/httpClient");
 
 const useAuth = () => {
-  const { data: session } = useSession();
   const refreshToken = useRefreshToken();
 
   useEffect(() => {
     const requestIntercept = AxiosAuth.interceptors.request.use(
       (config) => {
         if (!config.headers["Authorization"]) {
-          config.headers["Authorization"] = `Bearer ${session?.user?.token}`;
+          config.headers["Authorization"] = `Bearer ${sessionStorage.getItem(
+            storageKey.TOKEN
+          )}`;
         }
 
         return config;
@@ -33,11 +35,13 @@ const useAuth = () => {
 
           const refreshTokenResponse = await refreshToken();
 
-          prevRequest.headers[
-            "Authorization"
-          ] = `Bearer ${refreshTokenResponse.token}`;
+          if (refreshTokenResponse && refreshTokenResponse.token) {
+            prevRequest.headers[
+              "Authorization"
+            ] = `Bearer ${refreshTokenResponse.token}`;
 
-          return AxiosAuth(prevRequest);
+            return AxiosAuth(prevRequest);
+          }
         }
 
         return Promise.reject(error);
@@ -48,7 +52,7 @@ const useAuth = () => {
       AxiosAuth.interceptors.request.eject(requestIntercept);
       AxiosAuth.interceptors.response.eject(responseIntercept);
     };
-  }, [session, refreshToken]);
+  }, []);
 
   return AxiosAuth;
 };
