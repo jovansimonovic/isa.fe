@@ -9,7 +9,6 @@ import { CiTrash } from "react-icons/ci";
 import { useListActions } from "../../../contexts/listActionContext";
 import listAction from "../../../core/listAction";
 import { IoAddCircleOutline } from "react-icons/io5";
-import {signIn} from "next-auth/react";
 import AllUserDialogs from "../../elements/User/AllUserDialogs";
 
 const tableColumns = [
@@ -101,7 +100,6 @@ export default function UserList() {
     <>
       <Card>
         <CardHeader className="d-flex justify-content-end">
-          <button onClick={() => signIn()}>Sign in</button>
           <Button
             className="btn btn-success"
             onClick={() => {

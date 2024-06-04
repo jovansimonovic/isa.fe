@@ -30,12 +30,14 @@ const handler = NextAuth({
       if (trigger === "update") {
         return { ...token, ...session.user };
       }
+
       return { ...token, ...user };
     },
 
     async session({ session, token }) {
       session.user = token;
       session.decoded = jwtDecode(session.user.token);
+
       return session;
     },
   },

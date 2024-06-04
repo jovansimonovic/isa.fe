@@ -6,17 +6,14 @@ export const useListData = (url) => {
   const [data, setData] = useState(null);
   const AxiosAuth = useAuth();
 
-  const getData = useCallback(
-    async (url) => {
-      setLoading(true);
+  const getData = useCallback(async (url) => {
+    setLoading(true);
 
-      let result = await AxiosAuth.get(url);
+    let result = await AxiosAuth.get(url);
 
-      setData(result.data);
-      setLoading(false);
-    },
-    [url]
-  );
+    setData(result.data);
+    setLoading(false);
+  }, [url]);
 
   return { getData, loading, data };
 };
