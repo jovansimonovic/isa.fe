@@ -28,10 +28,16 @@ export default function Header() {
               fill="currentColor"
             ></path>
           </svg>
-          <span className="fs-4">ISA Template</span>
+          <span className="fs-4">ISA Project</span>
         </Link>
 
         <nav className="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+          <Link
+            href="/product/list"
+            className="me-3 py-2 text-dark text-decoration-none"
+          >
+            Products
+          </Link>
           <Link
             href="/user/list"
             className="me-3 py-2 text-dark text-decoration-none"

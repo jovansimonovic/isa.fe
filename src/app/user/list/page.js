@@ -125,7 +125,7 @@ export default function UserList() {
               onChangePage={handlePageChange}
               onChangeRowsPerPage={handlePerRowsChange}
               progressComponent={
-                <Spinner color="danger">Ucitavanje...</Spinner>
+                <Spinner color="danger">Loading...</Spinner>
               }
               highlightOnHover
             />
