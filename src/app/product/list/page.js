@@ -1,16 +1,15 @@
 "use client";
 
-import useListData from "@/hooks/useListData";
+import useListDataWithoutAuth from "@/hooks/useListDataWithoutAuth";
 import { useEffect } from "react";
 import { Card, CardBody, CardFooter, CardText, CardTitle } from "reactstrap";
 
 export default function ProductList() {
-  const { getData, data } = useListData(`product/get-list`);
+  const { getData, data } = useListDataWithoutAuth(`product/get-list`);
 
   useEffect(() => {
     getData(`product/get-list`);
   }, []);
-  console.log(data)
 
   return (
     <>

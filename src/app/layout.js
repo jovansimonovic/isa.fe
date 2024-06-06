@@ -6,7 +6,7 @@ import Footer from "@/components/Footer/Footer";
 import { ListActionProvider } from "@/contexts/listActionContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Provider from "@/app/providers"; //ovo je mozda greska
+import Provider from "@/app/providers";
 import SessionStatusWrapper from "@/components/Session/SessionStatusWrapper";
 import { TestProvider } from "@/contexts/testContext";
 

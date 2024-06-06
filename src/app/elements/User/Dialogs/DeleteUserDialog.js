@@ -1,7 +1,7 @@
 import { useListActions } from "../../../../contexts/listActionContext";
 import listAction from "../../../../core/listAction";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-import { del } from "../../../../core/httpClient";
+import { AxiosAuth, del } from "../../../../core/httpClient";
 import { toast } from "react-toastify";
 
 export const DeleteUserDialog = ({ isOpen }) => {
@@ -29,7 +29,7 @@ export const DeleteUserDialog = ({ isOpen }) => {
           type="button"
           className="btn btn-danger"
           onClick={async () => {
-            let result = await del(`/user/delete?userId=${state.row.id}`);
+            let result = await AxiosAuth.delete(`/user/delete?userId=${state.row.id}`);
 
             if (result && result.status === 200) {
               toast.success("User successfully deleted");

@@ -1,9 +1,12 @@
+import { get } from "@/core/httpClient";
+import storageKey from "@/core/storageKey";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { Button } from "reactstrap";
 
 export default function Header() {
   const { data: session } = useSession();
+  console.log(session)
 
   return (
     <header>
@@ -54,8 +57,11 @@ export default function Header() {
               </Link>
               <Button
                 className="btn btn-small btn-primary"
-                onClick={() => {
+                onClick={async () => {
+                  await get(`/auth/logout?userId=${session.decoded.id}`)
                   signOut();
+                  sessionStorage.removeItem(storageKey.TOKEN);
+                  sessionStorage.removeItem(storageKey.REFRESH_TOKEN);
                 }}
               >
                 Sign out
